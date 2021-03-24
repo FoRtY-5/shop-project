@@ -1,8 +1,6 @@
 package com.project.shop.model;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,17 +8,23 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "ADDRESS")
 public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "AD_ID")
     private int id;
-    @Column
+    @Column(name = "AD_STREET")
     private String street;
-    @Column
+    @Column(name = "AD_CITY")
+    private String city;
+    @Column(name = "AD_COUNTRY")
     private String country;
-    @Column
+    @Column(name = "AD_POSTALCODE")
     private String postalCode;
 
 }

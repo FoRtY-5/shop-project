@@ -15,8 +15,9 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "CA_ID")
     private int id;
-    @Column
+    @Column(name = "CA_NAME")
     private String name;
     @OneToOne
     private Category category;

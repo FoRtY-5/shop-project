@@ -16,14 +16,18 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "OR_ID")
     private int id;
-    @Column
+    @Column(name = "OR_SHIPMENTADDRESS")
     private String shipmentAddress;
-    @Column
+    @Column(name = "OR_PRICE")
     private double price;
-    @Column
+    @Column(name = "OR_DATE")
     private String date;
-    @Column
+    @Column(name = "OR_STATUS")
     private Status status;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "OR_US_ID", referencedColumnName = "US_ID")
+    private User user;
 
 }
