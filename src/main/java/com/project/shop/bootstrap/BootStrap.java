@@ -21,6 +21,7 @@ import java.util.Set;
 public class BootStrap implements CommandLineRunner {
 
     Set<Role> standardRole = new HashSet<>();
+    Set<Role> adminRole = new HashSet<>();
 
     UserRepository userRepository;
     RoleRepository roleRepository;
@@ -35,17 +36,33 @@ public class BootStrap implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        loadEntities();
+        loadRoles();
+        loadUsers();
     }
 
-    private void loadEntities() {
-        Role regularRole = Role.builder()
+    private void loadRoles() {
+        Role regular = Role.builder()
                 .roleName("Regular")
                 .build();
 
-        roleRepository.save(regularRole);
+        Role admin = Role.builder()
+                .roleName("Admin").build();
 
-        standardRole.add(regularRole);
+        Role seller = Role.builder()
+                .roleName("Seller").build();
+
+        roleRepository.save(regular);
+        roleRepository.save(seller);
+        roleRepository.save(admin);
+
+        standardRole.add(regular);
+
+        adminRole.add(regular);
+        adminRole.add(seller);
+        adminRole.add(admin);
+    }
+
+    private void loadUsers() {
 
         Address user1Address = Address.builder()
                 .street("Aleje Jerozolimskie")
@@ -53,9 +70,16 @@ public class BootStrap implements CommandLineRunner {
                 .country("Poland")
                 .postalCode("00-001").build();
 
-        addressRepository.save(user1Address);
+        Address user2Address = Address.builder()
+                .street("Chmielna")
+                .city("Gdansk")
+                .country("Poland")
+                .postalCode("80-001").build();
 
-        User user = User.builder()
+        addressRepository.save(user1Address);
+        addressRepository.save(user2Address);
+
+        User user1 = User.builder()
                 .firstName("Jan")
                 .lastName("Kowalski")
                 .password("sample")
@@ -63,7 +87,16 @@ public class BootStrap implements CommandLineRunner {
                 .email("jan.kowalski@test.pl")
                 .address(user1Address).build();
 
-        userRepository.save(user);
+        User user2 = User.builder()
+                .firstName("Radoslaw")
+                .lastName("Blaszczykowski")
+                .password("test")
+                .role(adminRole)
+                .email("radolsaw.email@email.pl")
+                .address(user2Address).build();
+
+        userRepository.save(user1);
+        userRepository.save(user2);
 
         System.out.println("##### BOOTSTRAP LOADED #####");
         System.out.println("Users in data base: " + userRepository.count());
@@ -71,3 +104,4 @@ public class BootStrap implements CommandLineRunner {
     }
 
 }
+

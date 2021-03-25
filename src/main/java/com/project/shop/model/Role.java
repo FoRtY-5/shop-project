@@ -18,6 +18,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "RO_ID")
     public int id;
+
     @Column(name = "RO_ROLENAME")
     public String roleName;
 

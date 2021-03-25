@@ -17,8 +17,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "CA_ID")
     private int id;
+
     @Column(name = "CA_NAME")
     private String name;
+
     @OneToOne
     private Category category;
 
