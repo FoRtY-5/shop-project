@@ -11,16 +11,17 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "ORDERS")
-public class Order {
+public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "OR_ID")
     private int id;
 
-    @Column(name = "OR_SHIPMENTADDRESS")
-    private String shipmentAddress;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Address shipmentAddress;
 
     @Column(name = "OR_PRICE")
     private double price;
