@@ -23,7 +23,7 @@ public class OrderElement {
     private int quantity;
 
     @ManyToOne
-    private Order order;
+    private Orders orders;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "OE_PR_ID")
