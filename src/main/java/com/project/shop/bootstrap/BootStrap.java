@@ -1,10 +1,13 @@
 package com.project.shop.bootstrap;
 
 import com.project.shop.model.Address;
+import com.project.shop.model.Orders;
 import com.project.shop.model.Role;
 import com.project.shop.model.User;
 import com.project.shop.model.enums.NewsLetter;
+import com.project.shop.model.enums.Status;
 import com.project.shop.repository.AddressRepository;
+import com.project.shop.repository.OrderRepository;
 import com.project.shop.repository.RoleRepository;
 import com.project.shop.repository.UserRepository;
 import org.hibernate.Session;
@@ -26,12 +29,16 @@ public class BootStrap implements CommandLineRunner {
     UserRepository userRepository;
     RoleRepository roleRepository;
     AddressRepository addressRepository;
+    OrderRepository orderRepository;
 
-    public BootStrap(UserRepository userRepository, RoleRepository roleRepository,
-                     AddressRepository addressRepository) {
+    public BootStrap(UserRepository userRepository,
+                     RoleRepository roleRepository,
+                     AddressRepository addressRepository,
+                     OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.addressRepository = addressRepository;
+        this.orderRepository = orderRepository;
     }
 
     @Override
@@ -76,8 +83,15 @@ public class BootStrap implements CommandLineRunner {
                 .country("Poland")
                 .postalCode("80-001").build();
 
+        Address user3Address = Address.builder()
+                .street("Jana Pawła")
+                .city("Sosnowiec")
+                .country("Poland")
+                .postalCode("41-219").build();
+
         addressRepository.save(user1Address);
         addressRepository.save(user2Address);
+        addressRepository.save(user3Address);
 
         User user1 = User.builder()
                 .firstName("Jan")
@@ -95,11 +109,31 @@ public class BootStrap implements CommandLineRunner {
                 .email("radolsaw.email@email.pl")
                 .address(user2Address).build();
 
+        User user3 = User.builder()
+                .firstName("Jakub")
+                .lastName("Figiel")
+                .password("Orangutan123")
+                .role(standardRole)
+                .email("figlu.miglu@gmail.com")
+                .address(user3Address).build();
+
         userRepository.save(user1);
         userRepository.save(user2);
+        userRepository.save(user3);
+
+        Orders orders = Orders.builder()
+                .shipmentAddress(user1.getAddress())
+                .price(899.99d)
+                .date("02/12/2020")
+                .status(Status.IN_PROGRESS)
+                .user(user1).build();
+
+        orderRepository.save(orders);
 
         System.out.println("##### BOOTSTRAP LOADED #####");
         System.out.println("Users in data base: " + userRepository.count());
+        System.out.println("Addresses in data base: " + addressRepository.count());
+        System.out.println("Orders in data base: " + orderRepository.count());
 
     }
 
