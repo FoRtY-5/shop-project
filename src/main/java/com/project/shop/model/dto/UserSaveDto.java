@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserSaveDto {
 
-    private int id;
-
     private String firstName;
 
     private String lastName;
