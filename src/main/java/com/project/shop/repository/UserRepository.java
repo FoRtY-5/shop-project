@@ -9,10 +9,20 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    List<User> getUsersByFirstName(Pageable pageable, String firstName);
+    List<User> getUsersByFirstNameContaining(Pageable pageable, String firstName);
 
-    List<User> getUsersByLastName(Pageable pageable, String lastName);
+    List<User> getUsersByLastNameContaining(Pageable pageable, String lastName);
 
-    User getUserByEmail(String email);
+    User getUserByEmailContaining(String email);
+
+    User getTopByOrderByIdDesc();
+
+    boolean existsUsersByFirstNameContaining(String firstName);
+
+    boolean existsUsersByLastNameContaining(String lastName);
+
+    boolean existsUserByEmailContaining(String email);
+
+
 
 }
