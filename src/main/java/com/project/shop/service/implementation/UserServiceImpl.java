@@ -1,9 +1,12 @@
 package com.project.shop.service.implementation;
 
 import com.project.shop.exception.UserNotFoundException;
+import com.project.shop.model.Address;
+import com.project.shop.model.Role;
 import com.project.shop.model.User;
 import com.project.shop.model.dto.UserDto;
 import com.project.shop.model.dto.UserSaveDto;
+import com.project.shop.model.enums.NewsLetter;
 import com.project.shop.repository.AddressRepository;
 import com.project.shop.repository.RoleRepository;
 import com.project.shop.repository.UserRepository;
@@ -47,13 +50,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserById(int id) {
-        return modelMapper.map(getOne(id), UserDto.class);
+        return modelMapper.map(getOneFromDB(id), UserDto.class);
     }
 
     @Override
     public List<UserDto> getUsersByFirstName(String firstName, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return userRepository.getUsersByFirstName(pageable, firstName).stream()
+        return userRepository.getUsersByFirstNameContaining(pageable, firstName).stream()
                 .map(user -> modelMapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
     }
@@ -61,7 +64,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getUsersByLastName(String lastName, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return userRepository.getUsersByLastName(pageable, lastName).stream()
+        return userRepository.getUsersByLastNameContaining(pageable, lastName).stream()
                 .map(user -> modelMapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
     }
@@ -69,8 +72,8 @@ public class UserServiceImpl implements UserService {
     @SneakyThrows
     @Override
     public UserDto getUserByEmail(String email) {
-        if (userRepository.getUserByEmail(email) != null) {
-            return modelMapper.map(userRepository.getUserByEmail(email), UserDto.class);
+        if (userRepository.existsUserByEmailContaining(email)) {
+            return modelMapper.map(userRepository.getUserByEmailContaining(email), UserDto.class);
         } else {
             throw new UserNotFoundException("User not found");
         }
@@ -78,15 +81,35 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDto createUser(UserSaveDto user) {
+    public UserDto saveUser(UserSaveDto user) {
         User savedUser = modelMapper.map(user, User.class);
         savedUser.setRole(Set.of(roleRepository.getOne(1)));
+        savedUser.setActive(true);
         userRepository.save(savedUser);
         return modelMapper.map(savedUser, UserDto.class);
     }
 
+    @Override
+    public UserDto updateUser(UserDto user) {
+        User updatedUser = getOneFromDB(user.getId());
+        if (user.getFirstName() != null) updatedUser.setFirstName(user.getFirstName());
+        if(user.getLastName() != null) updatedUser.setLastName(user.getLastName());
+        if (user.getEmail() != null) updatedUser.setEmail(user.getEmail());
+        if (user.getPassword() != null) updatedUser.setPassword(user.getPassword());
+        if (user.getAddress() != null) updatedUser.setAddress(modelMapper.map(user.getAddress(), Address.class));
+        if (user.getNewsletter() != null) updatedUser.setNewsLetter(user.getNewsletter());
+        return modelMapper.map(updatedUser, UserDto.class);
+    }
+
+    @Override
+    public UserDto disableUserById(int id) {
+        User user = getOneFromDB(id);
+        user.setActive(false);
+        return modelMapper.map(user, UserDto.class);
+    }
+
     @SneakyThrows
-    private User getOne(int id) {
+    private User getOneFromDB(int id) {
         if (userRepository.existsById(id)) {
             return userRepository.getOne(id);
         } else {

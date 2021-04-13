@@ -95,6 +95,7 @@ public class BootStrap implements CommandLineRunner {
 
         User user1 = User.builder()
                 .firstName("Jan")
+                .isActive(true)
                 .lastName("Kowalski")
                 .password("sample")
                 .role(standardRole)
@@ -103,6 +104,7 @@ public class BootStrap implements CommandLineRunner {
 
         User user2 = User.builder()
                 .firstName("Radoslaw")
+                .isActive(false)
                 .lastName("Blaszczykowski")
                 .password("test")
                 .role(adminRole)
@@ -111,6 +113,7 @@ public class BootStrap implements CommandLineRunner {
 
         User user3 = User.builder()
                 .firstName("Jakub")
+                .isActive(true)
                 .lastName("Figiel")
                 .password("Orangutan123")
                 .role(standardRole)

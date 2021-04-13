@@ -18,6 +18,9 @@ public interface UserService {
 
     UserDto getUserByEmail(String email);
 
-    UserDto createUser(UserSaveDto user);
+    UserDto saveUser(UserSaveDto user);
 
+    UserDto updateUser(UserDto user);
+
+    UserDto disableUserById(int id);
 }
