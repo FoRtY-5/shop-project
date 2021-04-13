@@ -25,6 +25,9 @@ public class User {
     @Column(name = "US_ID")
     private int id;
 
+    @Column(name = "US_ACTIVE")
+    private boolean isActive;
+
     @Column(name = "US_FIRSTNAME")
     @NotEmpty
     private String firstName;
