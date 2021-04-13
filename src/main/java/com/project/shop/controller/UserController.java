@@ -53,9 +53,18 @@ public class UserController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public UserDto createUser(@Valid @RequestBody UserSaveDto user) {
-        return userService.createUser(user);
+        return userService.saveUser(user);
     }
 
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public UserDto updateUser(@Valid @RequestBody UserSaveDto user) {
+        return userService.updateUser(user);
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    public String deleteUser(@PathVariable int id) {
+        return userService.disableUserById(id);
+    }
 
 
 }

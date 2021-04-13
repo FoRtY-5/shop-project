@@ -4,6 +4,7 @@ import com.project.shop.model.dto.OrderDto;
 import com.project.shop.service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,4 +28,15 @@ public class OrderController {
     public OrderDto getOrderById(@PathVariable int id) {
         return orderService.getOrderById(id);
     }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public OrderDto createOrder(@Valid @RequestBody OrderDto order) {
+        return orderService.createOrder(order);
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public OrderDto updateOrder(OrderDto order) {
+        return orderService.createOrder(order);
+    }
+
 }
