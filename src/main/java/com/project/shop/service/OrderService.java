@@ -10,4 +10,8 @@ public interface OrderService {
 
     OrderDto getOrderById(int id);
 
+    OrderDto saveOrder(OrderDto order);
+
+    OrderDto updateOrder(OrderDto order);
+
 }

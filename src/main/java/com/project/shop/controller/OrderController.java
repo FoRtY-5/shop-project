@@ -31,12 +31,12 @@ public class OrderController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public OrderDto createOrder(@Valid @RequestBody OrderDto order) {
-        return orderService.createOrder(order);
+        return orderService.saveOrder(order);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public OrderDto updateOrder(OrderDto order) {
-        return orderService.createOrder(order);
+        return orderService.updateOrder(order);
     }
 
 }
