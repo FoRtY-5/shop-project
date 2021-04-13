@@ -1,10 +1,11 @@
 package com.project.shop.service.implementation;
 
 import com.project.shop.exception.OrderNotFoundException;
+import com.project.shop.model.Address;
 import com.project.shop.model.Orders;
+import com.project.shop.model.User;
 import com.project.shop.model.dto.OrderDto;
 import com.project.shop.repository.OrderRepository;
-import com.project.shop.repository.UserRepository;
 import com.project.shop.service.OrderService;
 import com.project.shop.service.UserService;
 import lombok.SneakyThrows;
@@ -37,12 +38,28 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto getOrderById(int id) {
-        return modelMapper.map(getOne(id), OrderDto.class);
+        return modelMapper.map(getOneFromDB(id), OrderDto.class);
+    }
+
+    @Override
+    public OrderDto saveOrder(OrderDto order) {
+        orderRepository.save(modelMapper.map(order, Orders.class));
+        return order;
+    }
+
+    @Override
+    public OrderDto updateOrder(OrderDto order) {
+        Orders updatedOrder = getOneFromDB(order.getId());
+        if (order.getShipmentAddress() != null) updatedOrder.setShipmentAddress(modelMapper.map(order.getShipmentAddress(), Address.class));
+        if (order.getPrice() != null) updatedOrder.setPrice(order.getPrice());
+        if (order.getStatus() != null) updatedOrder.setStatus(order.getStatus());
+        if (order.getUser() != null) updatedOrder.setUser(modelMapper.map(order.getUser(), User.class));
+        return modelMapper.map(updatedOrder, OrderDto.class);
     }
 
 
     @SneakyThrows
-    private Orders getOne(int id) {
+    private Orders getOneFromDB(int id) {
         if (orderRepository.existsById(id)) {
             return orderRepository.getOne(id);
         } else {

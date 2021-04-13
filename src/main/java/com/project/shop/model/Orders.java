@@ -4,6 +4,7 @@ import com.project.shop.model.enums.Status;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -24,7 +25,7 @@ public class Orders {
     private Address shipmentAddress;
 
     @Column(name = "OR_PRICE")
-    private double price;
+    private BigDecimal price;
 
     @Column(name = "OR_DATE")
     private String date;
