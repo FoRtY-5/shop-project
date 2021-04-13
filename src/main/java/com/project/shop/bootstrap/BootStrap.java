@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -126,7 +127,7 @@ public class BootStrap implements CommandLineRunner {
 
         Orders orders = Orders.builder()
                 .shipmentAddress(user1.getAddress())
-                .price(899.99d)
+                .price(BigDecimal.valueOf(899.9))
                 .date("02/12/2020")
                 .status(Status.IN_PROGRESS)
                 .user(user1).build();
