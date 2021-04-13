@@ -29,7 +29,7 @@ public class CategoryController {
     public List<CategoryDto> getCategoryByName(@PathVariable String name,
                                                @RequestParam int page,
                                                @RequestParam int size) {
-        return categoryService.getCategoryByName(name, page, size);
+        return categoryService.getCategoriesByName(page, size, name);
     }
 
     @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
@@ -46,10 +46,5 @@ public class CategoryController {
     public CategoryDto updateCategory(@Valid @RequestBody CategoryDto category) {
         return categoryService.saveCategory(category);
     }
-//FIXME naprawic usuwanie kategorii
-//    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-//    public CategoryDto deleteCategory(@Valid @RequestBody CategoryDto category) {
-//        return categoryService.deleteCategory(category);
-//    }
 
 }
