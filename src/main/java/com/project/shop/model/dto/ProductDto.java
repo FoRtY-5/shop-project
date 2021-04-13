@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.jdbc.support.incrementer.HanaSequenceMaxValueIncrementer;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ public class ProductDto {
 
     private String miniatureUrl;
 
-    private double price;
+    private BigDecimal price;
 
     private Set<CategoryDto> category = new HashSet<>();
 

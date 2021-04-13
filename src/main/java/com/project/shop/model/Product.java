@@ -3,6 +3,7 @@ package com.project.shop.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,7 +31,7 @@ public class Product {
     private String miniatureUrl;
 
     @Column(name = "PR_PRICE")
-    private double price;
+    private BigDecimal price;
 
     @ManyToMany
     @JoinTable(name = "PRODUCT_CATEGORY", joinColumns = @JoinColumn(name = "PRODUCT_PR_ID"),
