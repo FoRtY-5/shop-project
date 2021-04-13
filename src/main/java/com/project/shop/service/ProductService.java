@@ -14,4 +14,8 @@ public interface ProductService {
 
     ProductDto getProductById(int id);
 
+    ProductDto saveProduct(ProductDto product);
+
+    ProductDto updateProduct(ProductDto product);
+
 }

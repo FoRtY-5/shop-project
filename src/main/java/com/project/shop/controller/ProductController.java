@@ -53,13 +53,7 @@ public class ProductController {
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public ProductDto updateProduct(@Valid @RequestBody ProductDto product) {
-        return productService.saveProduct(product);
-    }
-
-    //TODO sprawdzic czy dziala poprawnie
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public String deleteProduct(@PathVariable int id) {
-        return productService.deleteProductById(id);
+        return productService.updateProduct(product);
     }
 
 }

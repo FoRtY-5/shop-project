@@ -1,6 +1,7 @@
 package com.project.shop.service.implementation;
 
 import com.project.shop.exception.ProductNotFoundException;
+import com.project.shop.model.Category;
 import com.project.shop.model.Product;
 import com.project.shop.model.dto.ProductDto;
 import com.project.shop.repository.ProductRepository;
@@ -51,11 +52,31 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto getProductById(int id) {
-        return modelMapper.map(getOne(id), ProductDto.class);
+        return modelMapper.map(getOneFromDB(id), ProductDto.class);
+    }
+
+    @Override
+    public ProductDto saveProduct(ProductDto product) {
+        productRepository.save(modelMapper.map(product, Product.class));
+        return product;
+    }
+
+    @Override
+    public ProductDto updateProduct(ProductDto product) {
+        Product updatedProduct = getOneFromDB(product.getId());
+        if (product.getName() != null) updatedProduct.setName(product.getName());
+        if (product.getDescription() != null) updatedProduct.setDescription(product.getDescription());
+        if (product.getMiniatureUrl() != null) updatedProduct.setMiniatureUrl(product.getMiniatureUrl());
+        if (product.getPrice() != null) updatedProduct.setPrice(product.getPrice());
+        if (product.getCategory() != null)
+            updatedProduct.setCategory(product.getCategory().stream().map(
+                    categoryDto -> modelMapper.map(categoryDto, Category.class))
+                    .collect(Collectors.toSet()));
+        return modelMapper.map(updatedProduct, ProductDto.class);
     }
 
     @SneakyThrows
-    private Product getOne(int id) {
+    private Product getOneFromDB(int id) {
         if (productRepository.existsById(id)) {
             return productRepository.getOne(id);
         } else {
