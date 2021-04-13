@@ -7,6 +7,8 @@ import com.project.shop.repository.RoleRepository;
 import com.project.shop.service.RoleService;
 import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +27,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<RoleDto> getAllRoles(int page, int size) {
-        return roleRepository.getAllRoles().stream()
+        Pageable pageable = PageRequest.of(page, size);
+        return roleRepository.findAll(pageable).stream()
                 .map(role -> modelMapper.map(role, RoleDto.class))
                 .collect(Collectors.toList());
     }
