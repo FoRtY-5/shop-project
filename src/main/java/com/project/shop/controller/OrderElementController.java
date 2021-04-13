@@ -6,6 +6,7 @@ import com.project.shop.service.OrderElementService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/orderelement")
@@ -22,9 +23,9 @@ import javax.validation.Valid;
         return orderElementService.getOrderElementById(id);
     }
 
-    @RequestMapping(value = "/order", method = RequestMethod.GET)
-    public OrderElementDto getOrderElementByOrder(@Valid @RequestBody OrderDto order) {
-        return orderElementService.getOrderElementByOrder(order);
+    @RequestMapping(value = "/order/{id}", method = RequestMethod.GET)
+    public List<OrderElementDto> getOrderElementByOrder(@PathVariable int id) {
+        return orderElementService.getOrdersElementByOrderId(id);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -36,11 +37,5 @@ import javax.validation.Valid;
     public OrderElementDto updateOrderElement(@Valid @RequestBody OrderElementDto orderElement) {
         return orderElementService.saveOrderElement(orderElement);
     }
-
-//    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-//    public OrderElementDto deleteOrderElement(@Valid @RequestBody OrderElementDto orderElement) {
-//        return orderElementService.deleteOrderElement(orderElement);
-//    }
-
 
 }
