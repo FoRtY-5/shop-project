@@ -1,10 +1,7 @@
 package com.project.shop.controller;
 
 import com.project.shop.model.dto.AddressDto;
-import com.project.shop.repository.AddressRepository;
 import com.project.shop.service.AddressService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,4 +36,4 @@ public class AddressController {
         return addressService.getAddressById(id);
     }
 
-}
+   }
