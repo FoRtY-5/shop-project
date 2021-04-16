@@ -14,6 +14,11 @@ import javax.persistence.*;
 @Table(name = "ROLE")
 public class Role {
 
+    public static final String USER_ADMIN = "USER_ADMIN";
+    public static final String USER_SELLER = "USER_SELLER";
+    public static final String USER_REGULAR = "USER_REGULAR";
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RO_ID")

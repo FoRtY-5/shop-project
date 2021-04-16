@@ -33,7 +33,7 @@ public class ProductController {
         return productService.getProductsByPriceRange(page, size, min, max);
     }
 
-    @RequestMapping(value = "/list/name/{name}", params = {"page", "size"},
+    @RequestMapping(value = "/search/{name}", params = {"page", "size"},
             method = RequestMethod.GET)
     public List<ProductDto> getProductByName(@PathVariable String name,
                                              @RequestParam int page,
