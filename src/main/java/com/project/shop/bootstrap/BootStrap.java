@@ -102,7 +102,7 @@ public class BootStrap implements CommandLineRunner {
 
         User user2 = User.builder()
                 .firstName("Radoslaw")
-                .isActive(false)
+                .isActive(true)
                 .lastName("Blaszczykowski")
                 .password(passwordEncoder.encode("test"))
                 .role(adminRole)
@@ -113,8 +113,8 @@ public class BootStrap implements CommandLineRunner {
                 .firstName("Jakub")
                 .isActive(true)
                 .lastName("Figiel")
-                .password(passwordEncoder.encode("Ora" +
-                        ",ngutan123"))
+                .password(passwordEncoder.encode(
+                        "Orangutan123"))
                 .role(standardRole)
                 .email("figlu.miglu@gmail.com")
                 .address(user3Address).build();
