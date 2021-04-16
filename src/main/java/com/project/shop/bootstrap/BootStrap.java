@@ -4,16 +4,13 @@ import com.project.shop.model.Address;
 import com.project.shop.model.Orders;
 import com.project.shop.model.Role;
 import com.project.shop.model.User;
-import com.project.shop.model.enums.NewsLetter;
 import com.project.shop.model.enums.Status;
 import com.project.shop.repository.AddressRepository;
 import com.project.shop.repository.OrderRepository;
 import com.project.shop.repository.RoleRepository;
 import com.project.shop.repository.UserRepository;
-import org.hibernate.Session;
-import org.hibernate.internal.SessionImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -32,14 +29,18 @@ public class BootStrap implements CommandLineRunner {
     AddressRepository addressRepository;
     OrderRepository orderRepository;
 
+    PasswordEncoder passwordEncoder;
+
     public BootStrap(UserRepository userRepository,
                      RoleRepository roleRepository,
                      AddressRepository addressRepository,
-                     OrderRepository orderRepository) {
+                     OrderRepository orderRepository,
+                     PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.addressRepository = addressRepository;
         this.orderRepository = orderRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -50,14 +51,14 @@ public class BootStrap implements CommandLineRunner {
 
     private void loadRoles() {
         Role regular = Role.builder()
-                .roleName("Regular")
+                .roleName(Role.USER_REGULAR)
                 .build();
 
         Role admin = Role.builder()
-                .roleName("Admin").build();
+                .roleName(Role.USER_ADMIN).build();
 
         Role seller = Role.builder()
-                .roleName("Seller").build();
+                .roleName(Role.USER_SELLER).build();
 
         roleRepository.save(regular);
         roleRepository.save(seller);
@@ -90,15 +91,11 @@ public class BootStrap implements CommandLineRunner {
                 .country("Poland")
                 .postalCode("41-219").build();
 
-        addressRepository.save(user1Address);
-        addressRepository.save(user2Address);
-        addressRepository.save(user3Address);
-
         User user1 = User.builder()
                 .firstName("Jan")
                 .isActive(true)
                 .lastName("Kowalski")
-                .password("sample")
+                .password(passwordEncoder.encode("sample"))
                 .role(standardRole)
                 .email("jan.kowalski@test.pl")
                 .address(user1Address).build();
@@ -107,7 +104,7 @@ public class BootStrap implements CommandLineRunner {
                 .firstName("Radoslaw")
                 .isActive(false)
                 .lastName("Blaszczykowski")
-                .password("test")
+                .password(passwordEncoder.encode("test"))
                 .role(adminRole)
                 .email("radolsaw.email@email.pl")
                 .address(user2Address).build();
@@ -116,7 +113,8 @@ public class BootStrap implements CommandLineRunner {
                 .firstName("Jakub")
                 .isActive(true)
                 .lastName("Figiel")
-                .password("Orangutan123")
+                .password(passwordEncoder.encode("Ora" +
+                        ",ngutan123"))
                 .role(standardRole)
                 .email("figlu.miglu@gmail.com")
                 .address(user3Address).build();

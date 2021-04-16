@@ -24,7 +24,7 @@ public class CategoryController {
         return categoryService.getAllCategories(page, size);
     }
 
-    @RequestMapping(value = "/name/{name}", params = {"page", "size"},
+    @RequestMapping(value = "/search/{name}", params = {"page", "size"},
     method = RequestMethod.GET)
     public List<CategoryDto> getCategoryByName(@PathVariable String name,
                                                @RequestParam int page,

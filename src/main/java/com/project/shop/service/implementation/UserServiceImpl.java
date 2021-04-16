@@ -18,6 +18,7 @@ import org.modelmapper.ModelMapper;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -32,12 +33,18 @@ public class UserServiceImpl implements UserService {
     private AddressRepository addressRepository;
     private RoleRepository roleRepository;
 
+    private PasswordEncoder passwordEncoder;
+
     private ModelMapper modelMapper = new ModelMapper();
 
-    public UserServiceImpl(UserRepository userRepository, AddressRepository addressRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository,
+                           AddressRepository addressRepository,
+                           RoleRepository roleRepository,
+                           PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -85,6 +92,7 @@ public class UserServiceImpl implements UserService {
         User savedUser = modelMapper.map(user, User.class);
         savedUser.setRole(Set.of(roleRepository.getOne(1)));
         savedUser.setActive(true);
+        savedUser.setPassword(passwordEncoder.encode(savedUser.getPassword()));
         userRepository.save(savedUser);
         return modelMapper.map(savedUser, UserDto.class);
     }
