@@ -8,7 +8,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/role")
+@RequestMapping("/api")
 public class RoleController {
 
     RoleService roleService;
@@ -17,7 +17,7 @@ public class RoleController {
         this.roleService = roleService;
     }
 
-    @RequestMapping(value = "/list", params = {"page", "size"},
+    @RequestMapping(value = "/admin/role/list", params = {"page", "size"},
     method = RequestMethod.GET)
     public List<RoleDto> getAllRoles(@RequestParam int page,
                                      @RequestParam int size) {
@@ -25,22 +25,22 @@ public class RoleController {
 
     }
 
-    @RequestMapping(value = "/list/name/{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/role/list/name/{name}", method = RequestMethod.GET)
     public List<RoleDto> getRolesByName(@PathVariable String name) {
         return roleService.getRoleByName(name);
     }
 
-    @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/role/id/{id}", method = RequestMethod.GET)
     public RoleDto getRoleById(@PathVariable int id) {
         return roleService.getRoleById(id);
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/role/create", method = RequestMethod.POST)
     public RoleDto createRole(@Valid @RequestBody RoleDto role) {
         return roleService.saveRole(role);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/admin/role/update", method = RequestMethod.PUT)
     public RoleDto updateRole(@Valid @RequestBody RoleDto role) {
         return roleService.saveRole(role);
     }
