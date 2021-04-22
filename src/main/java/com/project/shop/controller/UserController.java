@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 public class UserController {
 
     private UserService userService;
@@ -19,18 +19,18 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/list", params = {"page", "size"}, method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/user/list", params = {"page", "size"}, method = RequestMethod.GET)
     public List<UserDto> getAllUsers(@RequestParam int page,
                                      @RequestParam int size) {
         return userService.getAllUsers(page, size);
     }
 
-    @RequestMapping(value = "/id/{id}", method = RequestMethod.GET) //FIXME REMOVE THROWS
+    @RequestMapping(value = "/admin/user/id/{id}", method = RequestMethod.GET) //FIXME REMOVE THROWS
     public UserDto getUserById(@PathVariable int id) throws UserNotFoundException {
         return userService.getUserById(id);
     }
 
-    @RequestMapping(value = "/firstname/{firstName}", params = {"page", "size"},
+    @RequestMapping(value = "/admin/user/firstname/{firstName}", params = {"page", "size"},
             method = RequestMethod.GET)
     public List<UserDto> getUsersByFirstName(@PathVariable String firstName,
                                             @RequestParam int page,
@@ -38,7 +38,7 @@ public class UserController {
         return userService.getUsersByFirstName(firstName, page, size);
     }
 
-    @RequestMapping(value = "/lastname/{lastName}", params = {"page", "size"},
+    @RequestMapping(value = "/admin/user/lastname/{lastName}", params = {"page", "size"},
     method = RequestMethod.GET)
     public List<UserDto> getUsersByLastName(@PathVariable String lastName,
                                             @RequestParam int page,
@@ -46,22 +46,22 @@ public class UserController {
         return userService.getUsersByLastName(lastName, page, size);
     }
 
-    @RequestMapping(value = "/email/{email}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/user/email/{email}", method = RequestMethod.GET)
     public UserDto getUserByEmail(@PathVariable String email) {
         return userService.getUserByEmail(email);
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     public UserDto createUser(@Valid @RequestBody UserSaveDto user) {
         return userService.saveUser(user);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/regular/user/update", method = RequestMethod.PUT)
     public UserDto updateUser(@Valid @RequestBody UserDto user) {
         return userService.updateUser(user);
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/regular/user/delete/{id}", method = RequestMethod.DELETE)
     public UserDto deleteUser(@PathVariable int id) {
         return userService.disableUserById(id);
     }

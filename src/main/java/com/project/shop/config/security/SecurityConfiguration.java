@@ -1,5 +1,6 @@
 package com.project.shop.config.security;
 
+import com.project.shop.model.Role;
 import com.project.shop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -100,6 +101,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/category/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/category/search/**").permitAll()
                 //private endpoints
+                .antMatchers("/api/admin/**").hasRole(Role.USER_ADMIN)
+                .antMatchers("/api/seller/**").hasRole(Role.USER_SELLER)
+                .antMatchers("/api/regular/**").hasRole(Role.USER_REGULAR)
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

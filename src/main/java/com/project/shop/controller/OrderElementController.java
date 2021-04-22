@@ -1,6 +1,5 @@
 package com.project.shop.controller;
 
-import com.project.shop.model.dto.OrderDto;
 import com.project.shop.model.dto.OrderElementDto;
 import com.project.shop.service.OrderElementService;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +8,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/orderelement")
+@RequestMapping("/api")
         public class OrderElementController{
 
         OrderElementService orderElementService;
@@ -18,22 +17,22 @@ import java.util.List;
         this.orderElementService = orderElementService;
     }
 
-    @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/regular/orderelement/id/{id}", method = RequestMethod.GET)
     public OrderElementDto getOrderElementById(@PathVariable int id) {
         return orderElementService.getOrderElementById(id);
     }
 
-    @RequestMapping(value = "/order/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/regular/orderelement/order/{id}", method = RequestMethod.GET)
     public List<OrderElementDto> getOrderElementByOrder(@PathVariable int id) {
         return orderElementService.getOrdersElementByOrderId(id);
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/regular/orderelement/create", method = RequestMethod.POST)
     public OrderElementDto createOrderElement(@Valid @RequestBody OrderElementDto orderElement) {
         return orderElementService.saveOrderElement(orderElement);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/admin/orderelement/update", method = RequestMethod.PUT)
     public OrderElementDto updateOrderElement(@Valid @RequestBody OrderElementDto orderElement) {
         return orderElementService.saveOrderElement(orderElement);
     }
