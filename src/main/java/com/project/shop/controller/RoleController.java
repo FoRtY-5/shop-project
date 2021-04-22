@@ -18,7 +18,7 @@ public class RoleController {
     }
 
     @RequestMapping(value = "/admin/role/list", params = {"page", "size"},
-    method = RequestMethod.GET)
+            method = RequestMethod.GET)
     public List<RoleDto> getAllRoles(@RequestParam int page,
                                      @RequestParam int size) {
         return roleService.getAllRoles(page, size);

@@ -10,7 +10,8 @@ import org.springframework.context.annotation.Scope;
 @Configuration
 public class LoggingConfiguration {
 
-    @Bean @Scope("prototype")
+    @Bean
+    @Scope("prototype")
     public Logger logger(final InjectionPoint injectionPoint) {
         if (injectionPoint.getMethodParameter() != null) {
             return LoggerFactory.getLogger(injectionPoint.getMethodParameter().getContainingClass());

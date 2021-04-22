@@ -21,7 +21,6 @@ import static org.springframework.util.StringUtils.hasText;
 import static java.util.List.of;
 
 
-
 @Component
 @RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {

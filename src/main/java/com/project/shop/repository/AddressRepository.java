@@ -11,6 +11,4 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
 
     List<Address> getAddressByCity(Pageable pageable, String city);
 
-    Address getTopByOrderByIdDesc();
-
 }

@@ -1,6 +1,5 @@
 package com.project.shop.repository;
 
-
 import com.project.shop.model.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,17 +13,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<User> getUsersByLastNameContaining(Pageable pageable, String lastName);
 
-
     User getUserByEmailContaining(String email);
 
     Optional<User> findByEmail(String email);
 
-    boolean existsUsersByFirstNameContaining(String firstName);
-
-    boolean existsUsersByLastNameContaining(String lastName);
-
     boolean existsUserByEmailContaining(String email);
-
-
 
 }

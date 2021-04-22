@@ -18,14 +18,14 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/category/list", params = {"page", "size"},
-    method = RequestMethod.GET)
+            method = RequestMethod.GET)
     public List<CategoryDto> getAllCategories(@RequestParam int page,
                                               @RequestParam int size) {
         return categoryService.getAllCategories(page, size);
     }
 
     @RequestMapping(value = "/category/search/{name}", params = {"page", "size"},
-    method = RequestMethod.GET)
+            method = RequestMethod.GET)
     public List<CategoryDto> getCategoryByName(@PathVariable String name,
                                                @RequestParam int page,
                                                @RequestParam int size) {

@@ -41,4 +41,5 @@ public class Role {
     public int hashCode() {
         return id;
     }
+
 }

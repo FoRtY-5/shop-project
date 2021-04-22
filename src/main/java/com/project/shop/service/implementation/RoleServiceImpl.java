@@ -41,7 +41,6 @@ public class RoleServiceImpl implements RoleService {
     }
 
 
-
     @Override
     public RoleDto saveRole(RoleDto role) {
         roleRepository.save(modelMapper.map(role, Role.class));

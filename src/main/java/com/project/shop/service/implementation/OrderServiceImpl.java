@@ -7,7 +7,6 @@ import com.project.shop.model.User;
 import com.project.shop.model.dto.OrderDto;
 import com.project.shop.repository.OrderRepository;
 import com.project.shop.service.OrderService;
-import com.project.shop.service.UserService;
 import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
@@ -24,7 +23,7 @@ public class OrderServiceImpl implements OrderService {
 
     ModelMapper modelMapper = new ModelMapper();
 
-    public OrderServiceImpl(OrderRepository orderRepository, UserService userService) {
+    public OrderServiceImpl(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
@@ -50,7 +49,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto updateOrder(OrderDto order) {
         Orders updatedOrder = getOneFromDB(order.getId());
-        if (order.getShipmentAddress() != null) updatedOrder.setShipmentAddress(modelMapper.map(order.getShipmentAddress(), Address.class));
+        if (order.getShipmentAddress() != null)
+            updatedOrder.setShipmentAddress(modelMapper.map(order.getShipmentAddress(), Address.class));
         if (order.getPrice() != null) updatedOrder.setPrice(order.getPrice());
         if (order.getStatus() != null) updatedOrder.setStatus(order.getStatus());
         if (order.getUser() != null) updatedOrder.setUser(modelMapper.map(order.getUser(), User.class));

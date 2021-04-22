@@ -2,12 +2,9 @@ package com.project.shop.service.implementation;
 
 import com.project.shop.exception.UserNotFoundException;
 import com.project.shop.model.Address;
-import com.project.shop.model.Role;
 import com.project.shop.model.User;
 import com.project.shop.model.dto.UserDto;
 import com.project.shop.model.dto.UserSaveDto;
-import com.project.shop.model.enums.NewsLetter;
-import com.project.shop.repository.AddressRepository;
 import com.project.shop.repository.RoleRepository;
 import com.project.shop.repository.UserRepository;
 import com.project.shop.service.UserService;
@@ -30,7 +27,6 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
-    private AddressRepository addressRepository;
     private RoleRepository roleRepository;
 
     private PasswordEncoder passwordEncoder;
@@ -38,11 +34,9 @@ public class UserServiceImpl implements UserService {
     private ModelMapper modelMapper = new ModelMapper();
 
     public UserServiceImpl(UserRepository userRepository,
-                           AddressRepository addressRepository,
                            RoleRepository roleRepository,
                            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.addressRepository = addressRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -101,7 +95,7 @@ public class UserServiceImpl implements UserService {
     public UserDto updateUser(UserDto user) {
         User updatedUser = getOneFromDB(user.getId());
         if (user.getFirstName() != null) updatedUser.setFirstName(user.getFirstName());
-        if(user.getLastName() != null) updatedUser.setLastName(user.getLastName());
+        if (user.getLastName() != null) updatedUser.setLastName(user.getLastName());
         if (user.getEmail() != null) updatedUser.setEmail(user.getEmail());
         if (user.getPassword() != null) updatedUser.setPassword(user.getPassword());
         if (user.getAddress() != null) updatedUser.setAddress(modelMapper.map(user.getAddress(), Address.class));

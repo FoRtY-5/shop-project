@@ -35,10 +35,11 @@ public class Product {
 
     @ManyToMany
     @JoinTable(name = "PRODUCT_CATEGORY", joinColumns = @JoinColumn(name = "PRODUCT_PR_ID"),
-    inverseJoinColumns = @JoinColumn(name = "CATEGORY_CA_ID"))
+            inverseJoinColumns = @JoinColumn(name = "CATEGORY_CA_ID"))
     private Set<Category> category = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PR_US_ID")
     private User user;
+
 }

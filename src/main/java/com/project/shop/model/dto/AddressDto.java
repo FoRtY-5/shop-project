@@ -20,5 +20,4 @@ public class AddressDto {
 
     private String postalCode;
 
-
 }

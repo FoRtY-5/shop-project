@@ -26,5 +26,4 @@ public class ProductDto {
 
     private Set<CategoryDto> category = new HashSet<>();
 
-
 }

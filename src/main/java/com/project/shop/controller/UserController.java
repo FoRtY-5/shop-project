@@ -33,13 +33,13 @@ public class UserController {
     @RequestMapping(value = "/admin/user/firstname/{firstName}", params = {"page", "size"},
             method = RequestMethod.GET)
     public List<UserDto> getUsersByFirstName(@PathVariable String firstName,
-                                            @RequestParam int page,
-                                            @RequestParam int size) {
+                                             @RequestParam int page,
+                                             @RequestParam int size) {
         return userService.getUsersByFirstName(firstName, page, size);
     }
 
     @RequestMapping(value = "/admin/user/lastname/{lastName}", params = {"page", "size"},
-    method = RequestMethod.GET)
+            method = RequestMethod.GET)
     public List<UserDto> getUsersByLastName(@PathVariable String lastName,
                                             @RequestParam int page,
                                             @RequestParam int size) {
