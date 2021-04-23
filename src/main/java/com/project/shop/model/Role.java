@@ -1,6 +1,7 @@
 package com.project.shop.model;
 
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Table(name = "ROLE")
-public class Role {
+public class Role implements GrantedAuthority {
 
     public static final String USER_ADMIN = "USER_ADMIN";
     public static final String USER_SELLER = "USER_SELLER";
@@ -40,6 +41,11 @@ public class Role {
     @Override
     public int hashCode() {
         return id;
+    }
+
+    @Override
+    public String getAuthority() {
+        return roleName;
     }
 
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface OrderElementService {
 
-    List<OrderElementDto> getOrdersElementByOrderId(int id);
+    List<OrderElementDto> getOrdersElementByOrderId(String email, int id);
 
     OrderElementDto getOrderElementById(int id);
 

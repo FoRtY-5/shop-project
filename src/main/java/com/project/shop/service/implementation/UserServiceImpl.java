@@ -72,9 +72,22 @@ public class UserServiceImpl implements UserService {
 
     @SneakyThrows
     @Override
+    public List<UserDto> getUserByEmailContaining(String email, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        if (userRepository.existsUserByEmailContaining(email)) {
+            return userRepository.getUserByEmailContaining(pageable, email).stream()
+                    .map(user -> modelMapper.map(user, UserDto.class))
+                    .collect(Collectors.toList());
+        } else {
+            throw new UserNotFoundException("User not found");
+        }
+    }
+
+    @SneakyThrows
+    @Override
     public UserDto getUserByEmail(String email) {
         if (userRepository.existsUserByEmailContaining(email)) {
-            return modelMapper.map(userRepository.getUserByEmailContaining(email), UserDto.class);
+            return modelMapper.map(userRepository.getUserByEmail(email), UserDto.class);
         } else {
             throw new UserNotFoundException("User not found");
         }

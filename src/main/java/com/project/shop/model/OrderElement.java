@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "ORDER_ELEMENTS")
 public class OrderElement {
 
