@@ -95,15 +95,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(format("%s/**", restApiDocPath)).permitAll()
                 .antMatchers(format("%s/**", swaggerPath)).permitAll()
                 //public endpoints
-                .antMatchers("/api/**").permitAll()
+                .antMatchers("/api/public/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/product/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/product/search/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/category/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/category/search/**").permitAll()
                 //private endpoints
-                .antMatchers("/api/admin/**").hasRole(Role.USER_ADMIN)
-                .antMatchers("/api/seller/**").hasRole(Role.USER_SELLER)
-                .antMatchers("/api/regular/**").hasRole(Role.USER_REGULAR)
+                .antMatchers("/api/admin/**").hasAuthority(Role.USER_ADMIN)
+                .antMatchers("/api/seller/**").hasAuthority(Role.USER_SELLER)
+                .antMatchers("/api/regular/**").hasAuthority(Role.USER_REGULAR)
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

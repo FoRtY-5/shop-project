@@ -6,6 +6,8 @@ import com.project.shop.model.Orders;
 import com.project.shop.model.Product;
 import com.project.shop.model.dto.OrderElementDto;
 import com.project.shop.repository.OrderElementRepository;
+import com.project.shop.repository.OrderRepository;
+import com.project.shop.repository.UserRepository;
 import com.project.shop.service.OrderElementService;
 import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
@@ -18,18 +20,26 @@ import java.util.stream.Collectors;
 public class OrderElementServiceImpl implements OrderElementService {
 
     OrderElementRepository orderElementRepository;
+    OrderRepository orderRepository;
 
     ModelMapper modelMapper = new ModelMapper();
 
-    public OrderElementServiceImpl(OrderElementRepository orderElementRepository) {
+    public OrderElementServiceImpl(OrderElementRepository orderElementRepository,
+                                   OrderRepository orderRepository) {
         this.orderElementRepository = orderElementRepository;
+        this.orderRepository = orderRepository;
     }
 
+    @SneakyThrows
     @Override
-    public List<OrderElementDto> getOrdersElementByOrderId(int id) {
-        return orderElementRepository.getAllByOrdersId(id).stream()
-                .map(orderElement -> modelMapper.map(orderElement, OrderElementDto.class))
-                .collect(Collectors.toList());
+    public List<OrderElementDto> getOrdersElementByOrderId(String email, int id) {
+        if (orderRepository.existsOrdersByUserEmailAndId(email, id)) {
+            return orderElementRepository.getAllByOrdersId(id).stream()
+                    .map(orderElement -> modelMapper.map(orderElement, OrderElementDto.class))
+                    .collect(Collectors.toList());
+        } else {
+            throw new OrderElementNotFoundException("Orders not found");
+        }
     }
 
     @Override

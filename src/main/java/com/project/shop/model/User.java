@@ -1,6 +1,7 @@
 package com.project.shop.model;
 
 import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -37,7 +38,7 @@ public class User implements UserDetails {
     @NotEmpty
     private String lastName;
 
-    @Column(name = "US_EMAIL")
+    @Column(name = "US_EMAIL", unique = true)
     @NotEmpty
     private String email;
 
@@ -57,7 +58,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "RO_ID"))
     private Set<Role> role = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_ID")
     private Set<Product> productSet = new HashSet<>();
 
@@ -79,7 +80,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return role;
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.project.shop.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -46,9 +47,12 @@ public class UserController {
         return userService.getUsersByLastName(lastName, page, size);
     }
 
-    @RequestMapping(value = "/admin/user/email/{email}", method = RequestMethod.GET)
-    public UserDto getUserByEmail(@PathVariable String email) {
-        return userService.getUserByEmail(email);
+    @RequestMapping(value = "/admin/user/email/{email}", params = {"page", "size"},
+            method = RequestMethod.GET)
+    public List<UserDto> getUserByEmail(@PathVariable String email,
+                                        @RequestParam int page,
+                                        @RequestParam int size) {
+        return userService.getUserByEmailContaining(email, page, size);
     }
 
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
@@ -66,5 +70,9 @@ public class UserController {
         return userService.disableUserById(id);
     }
 
+    @RequestMapping(value = "/regular/user/me", method = RequestMethod.GET)
+    public UserDto getUser(Principal principal) {
+        return userService.getUserByEmail(principal.getName());
+    }
 
 }

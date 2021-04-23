@@ -5,6 +5,7 @@ import com.project.shop.service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -37,6 +38,14 @@ public class OrderController {
     @RequestMapping(value = "/regular/orders/update", method = RequestMethod.PUT)
     public OrderDto updateOrder(OrderDto order) {
         return orderService.updateOrder(order);
+    }
+
+    @RequestMapping(value = "/regular/orders/me", params = {"page", "size"}
+            , method = RequestMethod.GET)
+    public List<OrderDto> getOrdersByUser(Principal principal,
+                                          @RequestParam int page,
+                                          @RequestParam int size) {
+        return orderService.getOrdersByUserEmail(principal.getName(), page, size);
     }
 
 }

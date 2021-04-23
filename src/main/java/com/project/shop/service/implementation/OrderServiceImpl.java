@@ -6,6 +6,7 @@ import com.project.shop.model.Orders;
 import com.project.shop.model.User;
 import com.project.shop.model.dto.OrderDto;
 import com.project.shop.repository.OrderRepository;
+import com.project.shop.repository.UserRepository;
 import com.project.shop.service.OrderService;
 import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
@@ -20,11 +21,14 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     OrderRepository orderRepository;
+    UserRepository userRepository;
 
     ModelMapper modelMapper = new ModelMapper();
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository,
+                            UserRepository userRepository) {
         this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -32,6 +36,15 @@ public class OrderServiceImpl implements OrderService {
         Pageable pageable = PageRequest.of(page, size);
         return orderRepository.findAll(pageable).stream()
                 .map(orders -> modelMapper.map(orders, OrderDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderDto> getOrdersByUserEmail(String email, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return orderRepository.getOrdersByUserId(pageable,
+                userRepository.getUserByEmail(email).getId())
+                .stream().map(orders -> modelMapper.map(orders, OrderDto.class))
                 .collect(Collectors.toList());
     }
 

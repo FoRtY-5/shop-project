@@ -16,6 +16,8 @@ public interface UserService {
 
     List<UserDto> getUsersByLastName(String lastName, int page, int size);
 
+    List<UserDto> getUserByEmailContaining(String email, int page, int size);
+
     UserDto getUserByEmail(String email);
 
     UserDto saveUser(UserSaveDto user);
