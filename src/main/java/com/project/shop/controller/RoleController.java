@@ -22,12 +22,11 @@ public class RoleController {
     public List<RoleDto> getAllRoles(@RequestParam int page,
                                      @RequestParam int size) {
         return roleService.getAllRoles(page, size);
-
     }
 
     @RequestMapping(value = "/admin/role/list/name/{name}", method = RequestMethod.GET)
     public List<RoleDto> getRolesByName(@PathVariable String name) {
-        return roleService.getRoleByName(name);
+        return roleService.getRoleByNameContaining(name);
     }
 
     @RequestMapping(value = "/admin/role/id/{id}", method = RequestMethod.GET)

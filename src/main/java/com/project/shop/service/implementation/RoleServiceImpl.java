@@ -34,7 +34,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<RoleDto> getRoleByName(String name) {
+    public List<RoleDto> getRoleByNameContaining(String name) {
         return roleRepository.getRolesByRoleNameContaining(name).stream()
                 .map(role -> modelMapper.map(role, RoleDto.class))
                 .collect(Collectors.toList());
