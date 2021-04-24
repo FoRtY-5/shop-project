@@ -2,6 +2,7 @@ package com.project.shop.service.implementation;
 
 import com.project.shop.exception.UserNotFoundException;
 import com.project.shop.model.Address;
+import com.project.shop.model.Role;
 import com.project.shop.model.User;
 import com.project.shop.model.dto.UserDto;
 import com.project.shop.model.dto.UserSaveDto;
@@ -120,6 +121,15 @@ public class UserServiceImpl implements UserService {
     public UserDto disableUserById(int id) {
         User user = getOneFromDB(id);
         user.setActive(false);
+        return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public UserDto updateToSeller(String email) {
+        User user = userRepository.getUserByEmail(email);
+        Set<Role> roles = user.getRole();
+        roles.add(roleRepository.getRoleByRoleName(Role.USER_SELLER));
+        user.setRole(roles);
         return modelMapper.map(user, UserDto.class);
     }
 

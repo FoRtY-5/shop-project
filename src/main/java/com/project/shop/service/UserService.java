@@ -25,4 +25,6 @@ public interface UserService {
     UserDto updateUser(UserDto user);
 
     UserDto disableUserById(int id);
+
+    UserDto updateToSeller(String email);
 }

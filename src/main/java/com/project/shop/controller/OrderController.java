@@ -30,7 +30,7 @@ public class OrderController {
         return orderService.getOrderById(id);
     }
 
-    @RequestMapping(value = "/orders/regular/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/regular/orders/create", method = RequestMethod.POST)
     public OrderDto createOrder(@Valid @RequestBody OrderDto order) {
         return orderService.saveOrder(order);
     }

@@ -8,7 +8,7 @@ public interface RoleService {
 
     List<RoleDto> getAllRoles(int page, int size);
 
-    List<RoleDto> getRoleByName(String name);
+    List<RoleDto> getRoleByNameContaining(String name);
 
     RoleDto saveRole(RoleDto role);
 

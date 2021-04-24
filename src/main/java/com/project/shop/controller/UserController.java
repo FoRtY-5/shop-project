@@ -55,7 +55,7 @@ public class UserController {
         return userService.getUserByEmailContaining(email, page, size);
     }
 
-    @RequestMapping(value = "/user/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/public/user/register", method = RequestMethod.POST)
     public UserDto createUser(@Valid @RequestBody UserSaveDto user) {
         return userService.saveUser(user);
     }
@@ -65,14 +65,19 @@ public class UserController {
         return userService.updateUser(user);
     }
 
-    @RequestMapping(value = "/regular/user/delete/{id}", method = RequestMethod.DELETE)
-    public UserDto deleteUser(@PathVariable int id) {
+    @RequestMapping(value = "/regular/user/disable/{id}", method = RequestMethod.PUT)
+    public UserDto disableUser(@PathVariable int id) {
         return userService.disableUserById(id);
     }
 
     @RequestMapping(value = "/regular/user/me", method = RequestMethod.GET)
     public UserDto getUser(Principal principal) {
         return userService.getUserByEmail(principal.getName());
+    }
+
+    @RequestMapping(value = "/regular/user/me/promote", method = RequestMethod.POST)
+    public UserDto updateToSeller(Principal principal) {
+        return userService.updateToSeller(principal.getName());
     }
 
 }
